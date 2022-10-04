@@ -1,5 +1,5 @@
 #! /usr/bin/python3
-
+#updated by jlefeuvr to retrieve power consumptions metrics from different components (ucs_domain, FI, Chassis and servers)
 __author__ = "Paresh Gupta"
 __version__ = "0.52"
 
@@ -17,6 +17,7 @@ from collections import Counter
 import concurrent.futures
 from ucsmsdk.ucshandle import UcsHandle
 from netmiko import ConnectHandler
+
 
 HOURS_IN_DAY = 24
 MINUTES_IN_HOUR = 60
@@ -98,9 +99,13 @@ class_ids = ['TopSystem',
              'EtherServerIntFIoPcEp',
              'FabricPathEp',
              'ComputeBlade',
-             'ComputeRackUnit'
+             'ComputeRackUnit',
+             'EquipmentPsuInputStats',
+             'ComputeMbPowerStats',
+             'EquipmentPsuStats'
             ]
 
+#'EquipmentPsuStats'
 ###############################################################################
 # BEGIN: Generic functions
 ###############################################################################
@@ -686,12 +691,25 @@ def get_fi_id_from_dn(dn):
     else:
         return None
 
+def get_psu_id_from_dn(dn):
+    if 'psu-1' in dn:
+        return '1'
+    elif 'psu-2' in dn:
+        return '2'
+    elif 'psu-3' in dn:
+        return '3'
+    elif 'psu-4' in dn:
+        return '4'
+    else:
+        return None
+
 def isFloat(val):
     try:
         float(val)
         return True
     except ValueError:
         return False
+
 
 def get_speed_num_from_string(speed, item):
     '''
@@ -1173,7 +1191,7 @@ def get_fi_port_dict(d_dict, dn, transport):
 
     return port_dict
 
-def parse_fi_env_stats(domain_ip, top_sys, net_elem, system_stats, fw, mgmt_t):
+def parse_fi_env_stats(domain_ip, top_sys, net_elem, system_stats, fw, mgmt_t, ppsu):
     """
     Use the output of query_classid from UCS to update global stats_dict
 
@@ -1184,6 +1202,7 @@ def parse_fi_env_stats(domain_ip, top_sys, net_elem, system_stats, fw, mgmt_t):
     system_stats (managedobjectlist of classid = SwSystemStats)
     fw (managedobjectlist of classid = FirmwareRunning)
     mgmt_t (managedobjectlist of classid = MgmtEntity)
+    ppsu (managedobjectlist as returned by EquipmentPsuInputStats)
 
     Returns:
     None
@@ -1192,7 +1211,6 @@ def parse_fi_env_stats(domain_ip, top_sys, net_elem, system_stats, fw, mgmt_t):
 
     global stats_dict
     d_dict = stats_dict[domain_ip]
-
     logger.info('Parse env_stats for {}'.format(domain_ip))
     for item in top_sys:
         logger.debug('In top_sys for {}:{}'.format(domain_ip, item.name))
@@ -1215,6 +1233,8 @@ def parse_fi_env_stats(domain_ip, top_sys, net_elem, system_stats, fw, mgmt_t):
         fi_dict['oob_if_ip'] = item.oob_if_ip
         fi_dict['serial'] = item.serial
         fi_dict['model'] = item.model
+        fi_dict['power_psu1']='0'
+        fi_dict['power_psu2']='0'
 
     for item in system_stats:
         logger.debug('In system_stats for {}:{}'.format(domain_ip, item.dn))
@@ -1225,6 +1245,16 @@ def parse_fi_env_stats(domain_ip, top_sys, net_elem, system_stats, fw, mgmt_t):
         fi_dict = d_dict[fi_id]
         fi_dict['load'] = item.load
         fi_dict['mem_available'] = item.mem_available
+
+    for item in ppsu:
+        logger.debug('In ppsu for {}:{}'.format(domain_ip, item.dn))
+        fi_id = get_fi_id_from_dn(item.dn)
+        psu_id = get_psu_id_from_dn(item.dn)
+        if fi_id is None:
+            logger.error('Unknow FI ID from {}\n{}'.format(domain_ip, item))
+            continue
+        fi_dict = d_dict[fi_id]
+        fi_dict['power_psu'+str(psu_id)] = item.power.split('.')[0]
 
     for item in fw:
         if 'sys/mgmt/fw-system' in item.dn:
@@ -1500,7 +1530,8 @@ def parse_fi_stats(domain_ip, fcpio, sanpc, sanpcep, fcstats, fcerr, ethpio,
 
     logger.info('Done: Parse fi_stats for {}'.format(domain_ip))
 
-def parse_compute_inventory(domain_ip, blade, ru):
+#chassis_power
+def parse_compute_inventory(domain_ip, blade, ru, compute_power, chassis_power):
     """
     Use the output of query_classid from UCS to update global stats_dict
 
@@ -1508,12 +1539,12 @@ def parse_compute_inventory(domain_ip, blade, ru):
     domain_ip (IP Address of the UCS domain)
     blade (managedobjectlist as returned by ComputeBlade)
     ru (managedobjectlist as returned by ComputeRackUnit)
-
+    compute_power (managedobjectlist as returned by ComputeMbPowerStats)
+    chassis_power (managedobjectlist as returned by EquipmentPsuStats)
     Returns:
     None
 
     """
-
     global stats_dict
     d_dict = stats_dict[domain_ip]
     chassis_dict = d_dict['chassis']
@@ -1566,9 +1597,10 @@ def parse_compute_inventory(domain_ip, blade, ru):
     logger.info('Done: Parse compute blades for {}'.format(domain_ip))
 
     logger.info('Parse rack units for {}'.format(domain_ip))
-
+    # power_value=compute_power[0].consumed_power
     # dn format: sys/rack-unit-2
     # assigned_to_dn format: org-root/org-HX3AF240b/ls-rack-unit-8
+    
     for item in ru:
         logger.debug('In fill_per_ru for {}:{}'.format(domain_ip, item.dn))
         dn_list = (item.dn).split('/')
@@ -1581,11 +1613,10 @@ def parse_compute_inventory(domain_ip, blade, ru):
             oper_state_code = 0
         else:
             oper_state_code = 1
-
         if ru not in ru_dict:
             ru_dict[ru] = {}
-        per_ru_dict = ru_dict[ru]
 
+        per_ru_dict = ru_dict[ru]
         per_ru_dict['service_profile'] = service_profile
         per_ru_dict['association'] = item.association
         per_ru_dict['oper_state'] = item.oper_state
@@ -1602,6 +1633,63 @@ def parse_compute_inventory(domain_ip, blade, ru):
         per_ru_dict['num_vFCs'] = item.num_of_fc_host_ifs
 
     logger.info('Done: Parse rack units for {}'.format(domain_ip))
+
+    for item in compute_power:
+        if "rack" in item.dn:
+            server_key=str((item.dn).split('/')[1])
+            ru_dict[server_key]["power"]=item.consumed_power.split('.')[0]
+        if "blade" in item.dn:
+            chassis_key=str((item.dn).split('/')[1])
+            server_key=(item.dn).split('/')[2]
+            chassis_dict[chassis_key]["blades"][server_key]["power"]=item.consumed_power.split('.')[0]
+
+    for item in chassis_dict:
+        chassis_dict[item]['power_psu1']='0'
+        chassis_dict[item]['power_psu2']='0'
+        chassis_dict[item]['power_psu3']='0'
+        chassis_dict[item]['power_psu4']='0'
+    for item in chassis_power:
+        chassis_dict[item.dn.split('/')[1]]['power_psu'+get_psu_id_from_dn(item.dn)]=item.output_power.split('.')[0]
+
+def get_total_power_consumed(domain_ip):
+    """
+    Update the stats dic per domain with total power consumed (FI,Rack and Chassis)
+
+    Parameters:
+    domain_ip (IP Address of the UCS domain)
+    Returns:
+    None
+
+    """
+    total_chassis_power=0
+    total_rack_power=0
+    total_fi_power=0
+    global stats_dict
+    d_dict = stats_dict[domain_ip]
+    ru_dict = d_dict['ru']
+    chassis_dict = d_dict['chassis']
+    fi_a_dict=d_dict['A']
+    fi_b_dict=d_dict['B']
+    if fi_a_dict is None:
+            logger.error('Domain has only one FI {}\n{}'.format(domain_ip))
+            total_fi_power = int(fi_b_dict["power_psu1"]) + int(fi_b_dict["power_psu2"])
+    elif fi_b_dict is None:
+            logger.error('Domain has only one FI {}\n{}'.format(domain_ip))
+            total_fi_power = int(fi_a_dict["power_psu1"]) + int(fi_a_dict["power_psu2"])
+    else:
+        total_fi_power= int(fi_a_dict["power_psu1"]) + int(fi_a_dict["power_psu2"]) + int(fi_b_dict["power_psu1"]) + int(fi_b_dict["power_psu2"])
+
+    for chassis in chassis_dict:
+        total_chassis_power=  total_chassis_power + int(chassis_dict[chassis]['power_psu1']) + int(chassis_dict[chassis]['power_psu2']) + int(chassis_dict[chassis]['power_psu3']) +int(chassis_dict[chassis]['power_psu4'])
+
+    for ru in ru_dict:
+        total_rack_power= total_rack_power + int(ru_dict[ru]['power'])
+    
+    d_dict['total_power']=total_fi_power + total_chassis_power + total_rack_power
+
+
+
+
 
 def parse_vnic_stats(domain_ip, vnic_stats, host_ethif, host_fcif, dcxvc):
     """
@@ -1979,7 +2067,8 @@ def parse_raw_sdk_stats():
                                obj['NetworkElement'],
                                obj['SwSystemStats'],
                                obj['FirmwareRunning'],
-                               obj['MgmtEntity'])
+                               obj['MgmtEntity'], 
+                               obj['EquipmentPsuInputStats'])
         except Exception as e:
             s = ''
             for item in obj['TopSystem']:
@@ -1992,6 +2081,9 @@ def parse_raw_sdk_stats():
                 s = s + (str)(item)
             for item in obj['MgmtEntity']:
                 s = s + (str)(item)
+            for item in obj['EquipmentPsuInputStats']:
+                s = s + (str)(item)
+
             logger.exception('parse_fi_env_stats:{}\n{}'.format(e, s))
 
         try:
@@ -2045,13 +2137,20 @@ def parse_raw_sdk_stats():
         try:
             parse_compute_inventory(domain_ip,
                                     obj['ComputeBlade'],
-                                    obj['ComputeRackUnit'])
+                                    obj['ComputeRackUnit'],
+                                    obj['ComputeMbPowerStats'],
+                                    obj['EquipmentPsuStats'])
         except Exception as e:
             s = ''
             for item in obj['ComputeBlade']:
                 s = s + (str)(item)
             for item in obj['ComputeRackUnit']:
                 s = s + (str)(item)
+            for item in obj['ComputeMbPowerStats']:
+                s = s + (str)(item) 
+            for item in obj['EquipmentPsuStats']:
+                s = s + (str)(item) 
+              
             logger.exception('parse_compute_inventory:{}\n{}'.format(e, s))
 
         try:
@@ -2083,7 +2182,6 @@ def parse_raw_sdk_stats():
             for item in obj['FabricPathEp']:
                 s = s + (str)(item)
             logger.exception('parse_backplane_port_stats:{}\n{}'.format(e, s))
-
         try:
             parse_vnic_stats(domain_ip,
                              obj['AdaptorVnicStats'],
@@ -2101,6 +2199,12 @@ def parse_raw_sdk_stats():
             for item in obj['DcxVc']:
                 s = s + (str)(item)
             logger.exception('parse_vnic_stats:{}\n{}'.format(e, s))
+        try:
+            get_total_power_consumed(domain_ip)
+        except Exception as e:
+            logger.exception('get_total_power_consumed:{}\n{}'.format(e, domain_ip))
+
+
 
 def parse_pfc_stats(pfc_output, domain_ip, fi_id):
     """
@@ -2366,6 +2470,7 @@ def influxdb_lp_server_fields(server_dict, server_fields):
         ',num_cpus=' + server_dict['num_cpus'] + \
         ',num_vEths=' + server_dict['num_vEths'] + \
         ',num_vFCs=' + server_dict['num_vFCs'] + \
+        ',power_consumed=' + server_dict['power'] + \
         ',serial="' + server_dict['serial'] + '"'
 
     server_fields = server_fields + '\n'
@@ -2488,6 +2593,9 @@ def print_output_in_influxdb_lp():
     fi_uplink_port_prefix = 'FIUplinkPortStats,domain='
 
     for domain_ip, d_dict in stats_dict.items():
+
+
+
         if 'mode' not in d_dict:
             logger.warning('Unable to print InfluxDB Line Protocol for {}' \
                             .format(domain_ip))
@@ -2497,6 +2605,13 @@ def print_output_in_influxdb_lp():
         mode = d_dict['mode']
         name = d_dict['name']
         uptime = d_dict['uptime']
+        domain_env_prefix = 'DomainEnvStats,domain='
+        domain_env_tags = ','
+        domain_env_fields = ' '
+        domain_env_prefix = domain_env_prefix + domain_ip
+        domain_env_tags = domain_env_tags + 'location=' + location
+        domain_env_fields = domain_env_fields + 'total_power='+str(d_dict['total_power']) +'\n'
+        final_print_string = final_print_string + domain_env_prefix + domain_env_tags + domain_env_fields
         for fi_id in fi_id_list:
             fi_dict = d_dict[fi_id]
 
@@ -2511,6 +2626,9 @@ def print_output_in_influxdb_lp():
                     ',total_memory=' + fi_dict['total_memory'] + \
                     ',mem_available=' + fi_dict['mem_available'] + \
                     ',model="' + fi_dict['model'] + '"' + \
+                    ',power_psu1=' + str(fi_dict['power_psu1']) + \
+                    ',power_psu2=' + str(fi_dict['power_psu2']) + \
+                    ',total_power=' +str( int(fi_dict['power_psu1']) + int(fi_dict['power_psu2']))+ \
                     ',serial="' + fi_dict['serial'] + '"' + \
                     ',oob_if_ip="' + fi_dict['oob_if_ip'] + '"' + \
                     ',mode="' + mode + '"' + ',name="' + name + '"' + \
@@ -2616,6 +2734,22 @@ def print_output_in_influxdb_lp():
         # Build insert string for blade servers - Servers, Vnic, Backplane, etc.
         chassis_dict = d_dict['chassis']
         for chassis_id, per_chassis_dict in chassis_dict.items():
+            chassis_env_prefix = 'ChassisEnv,domain='
+            chassis_env_tags = ','
+            chassis_env_fields = ' '
+            chassis_env_prefix = chassis_env_prefix + domain_ip
+            chassis_env_tags = chassis_env_tags + 'chassis_id=' + chassis_id + ',location=' + \
+                            location
+            chassis_env_fields = chassis_env_fields + 'power_psu1=' + chassis_dict[chassis_id]['power_psu1'] + \
+                    ',power_psu2=' + chassis_dict[chassis_id]['power_psu2'] + \
+                    ',power_psu3=' + chassis_dict[chassis_id]['power_psu3'] + \
+                    ',power_psu4=' + chassis_dict[chassis_id]['power_psu4'] + \
+                    ',total_power=' +  str(int(chassis_dict[chassis_id]['power_psu1']) + int(chassis_dict[chassis_id]['power_psu2']) +int(chassis_dict[chassis_id]['power_psu3']) +int(chassis_dict[chassis_id]['power_psu4']))
+            chassis_env_fields = chassis_env_fields + '\n'
+            final_print_string = final_print_string + chassis_env_prefix + \
+                                        chassis_env_tags + chassis_env_fields
+            # Done: Build insert string for ChassisEnvStats
+            
             if 'blades' not in per_chassis_dict:
                 continue
             blade_dict = per_chassis_dict['blades']

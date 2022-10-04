@@ -1,5 +1,5 @@
-# UCS Traffic Monitoring (UTM)
-Full-blown traffic monitoring of Cisco UCS servers using Grafana, InfluxDB and Telegraf.
+# UCS Traffic Monitoring (UTM) updated with power consumption
+Full-blown traffic and power consumption monitoring of Cisco UCS servers using Grafana, InfluxDB and Telegraf.
 
 Locations Dashboard
 ![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/07/utm_0.4-1.png)
@@ -24,6 +24,10 @@ Integrated documentation with conceptual drawing and detailed explanations
 
 Link utilization and errors
 ![UTM_v0 6-link-tabular-view](https://user-images.githubusercontent.com/8773072/122631083-b28ce680-d07d-11eb-8cc0-05d260fe6147.jpg)
+
+Power consumption
+
+
 
 and much more...
 
@@ -100,9 +104,3 @@ For detailed steps-by-step instructions, especially if you do not have prior exp
 
 ## Looking for something similar to monitor Cisco MDS Switches?
 [Click here to check out Cisco MDS Traffic Monitoring (MTM)](https://github.com/paregupt/mds_traffic_monitor)
-
-## Credits
-- My wife (Dimple) and kids (Manan and Kiara) while I took away precious weekend hours from you and invested in the development of UTM.
-- Folks in the Cisco UCS business unit and TAC, who knowingly or unknowingly helped me to build UTM and also for awesome content on ciscolive.com.
-- Colleagues and friends in Cisco (Art, Craig, Eugene, Mark and a long list of people) for the inspiration. 
-- End-users/customers: Philipe, Jason, Shawn, Ryan, Ian, and others for your great feedback.
