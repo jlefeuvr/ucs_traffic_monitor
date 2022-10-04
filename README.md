@@ -26,7 +26,8 @@ Link utilization and errors
 ![UTM_v0 6-link-tabular-view](https://user-images.githubusercontent.com/8773072/122631083-b28ce680-d07d-11eb-8cc0-05d260fe6147.jpg)
 
 Power consumption
-
+![enter image description here](https://github.com/jlefeuvr/ucs_traffic_monitor/blob/master/images/power_consumption_1.png)
+![enter image description here](https://github.com/jlefeuvr/ucs_traffic_monitor/blob/master/images/power_consumption_2.png)
 
 
 and much more...
