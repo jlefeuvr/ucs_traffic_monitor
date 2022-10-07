@@ -12,7 +12,7 @@ GRAFANA_PLUGIN_DIR=/var/lib/grafana/plugins
 # Folder id is used as per existing folder
 
 declare -A utm_dashboard_arr
-utm_dashboard_arr=( ["locations"]="ri2OFp4Wz" ["domain_overview"]="Inte2EIWk" ["domain_traffic"]="W7LSukHWz" ["chassis_traffic"]="KOM8ZHNWz" ["service_profile"]="Z0M_N1vWz" ["ingress_congestion"]="Sve32sDZk" ["chassis_pause"]="SVO-VNiWk" ["local_sys"]="9CXO3jTWz")
+utm_dashboard_arr=( ["locations"]="ri2OFp4Wz" ["domain_overview"]="Inte2EIWk" ["domain_traffic"]="W7LSukHWz" ["chassis_traffic"]="KOM8ZHNWz" ["service_profile"]="Z0M_N1vWz" ["ingress_congestion"]="Sve32sDZk" ["chassis_pause"]="SVO-VNiWk" ["local_sys"]="9CXO3jTWz" ["power_consumption"]="CXwb3tn4z")
 
 declare -A fid_arr
 
