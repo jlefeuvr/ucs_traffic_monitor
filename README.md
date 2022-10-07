@@ -41,9 +41,24 @@ and much more...
 - Tested OS: CentOS 7.x. Should work on other OS also.
 - Python version: Version 3 only. Should be able to work on Python 2 also with minor modification.
 
-Two options:
+Two options (ONLY OVA INSTALLATION HAS BEEN VALIDATED FOR THE POWER CONSUMPTION):
 - DIY Installation: Self install the required packages (or take a look to [ansible-install](ansible-install) folder where you could let the machine work for you)
 - OVA - Required packages are pre-installed on CentOS 7.6 OVA
+
+### OVA installation (Preferred)
+1.Download and deploy the OVA:
+[Download OVA Here](https://drive.google.com/file/d/1FDshn1QMOlQl4Gd3VhKwFuM67ZiA6PJC/view).
+[UTM ova releases page](https://github.com/paregupt/ucs_traffic_monitor/releases).
+
+2. Clone the git repository:
+git clone https://github.com/jlefeuvr/ucs_traffic_monitor
+
+3. Launch the upgrade script:
+upgrade_utm.sh
+
+4. check ntp sync (need to update /etc/chrony.conf with 'server <your_ntp_server_ip_address>'
+
+This is a CentOS 7.6 based OVA. Deployment is same as any other OVA that you have deployed before. [Click here for detailed installation instructions of the UTM OVA](https://www.since2k7.com/blog/2020/02/29/cisco-ucs-monitoring-using-grafana-influxdb-telegraf-utm-installation/#Installing_UTM_using_OVA). The OVA is based on v0.3. Upgrading to the latest must be your first step.
 
 ### DIY Installation
 1. Install Telegraf
@@ -57,9 +72,7 @@ Two options:
     1. Cisco UCSM Python SDK
     1. netmiko library
     
-### OVA installation
-[Download OVA from releases page](https://github.com/paregupt/ucs_traffic_monitor/releases).
-This is a CentOS 7.6 based OVA. Deployment is same as any other OVA that you have deployed before. [Click here for detailed installation instructions of the UTM OVA](https://www.since2k7.com/blog/2020/02/29/cisco-ucs-monitoring-using-grafana-influxdb-telegraf-utm-installation/#Installing_UTM_using_OVA). The OVA is based on v0.3. Upgrading to the latest must be your first step.
+
 
 ## Upgrades
 You are responsible to upgrade Grafana, InfluxDB, Telegraf, Python and other packages. Upgrading UTM is simple with one or two commands and doesn't take more than a few minutes. Please refer to respective packages for upgrade process. Please keep a watch on the security vulnerabilities and fixes.
