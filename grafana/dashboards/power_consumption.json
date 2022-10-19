@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 13,
-  "iteration": 1664903049950,
+  "iteration": 1666193572274,
   "links": [],
   "panels": [
     {
@@ -151,7 +151,7 @@
           ]
         },
         {
-          "alias": "$ucs_domain average total power",
+          "alias": "average power consumption $ucs_domain",
           "groupBy": [
             {
               "params": [
@@ -195,6 +195,96 @@
       "title": "UCS Domain Power Consumption ",
       "transformations": [],
       "type": "timeseries"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 1
+      },
+      "id": 32,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.7",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT meanValues + $average_ucs_domain_total_power FROM (SELECT (mean(\"total_power\") - mean(\"total_power\"))  as meanValues  FROM \"DomainEnvStats\"  GROUP BY time($__interval))",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "$ucs_domain ucs domain average total power consumption (per domain)",
+      "type": "stat"
     },
     {
       "collapsed": false,
@@ -254,32 +344,7 @@
           },
           "unit": "watt"
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "192.168.0.13 A"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "graph": true,
-                  "legend": false,
-                  "tooltip": false
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 9,
@@ -364,6 +429,45 @@
               "value": "/^$ucs_domain$/"
             }
           ]
+        },
+        {
+          "alias": "average power consumption $ucs_domain $fabric_interconnect",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT meanValues + $average_fi_total_power FROM (SELECT (mean(\"total_power\") - mean(\"total_power\"))  as meanValues  FROM \"FIEnvStats\"  GROUP BY time($__interval))",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "timeFrom": null,
@@ -411,7 +515,7 @@
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "never",
+            "showPoints": "always",
             "spanNulls": true
           },
           "mappings": [],
@@ -430,32 +534,7 @@
           },
           "unit": "watt"
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "192.168.0.13 chassis-1"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "graph": true,
-                  "legend": false,
-                  "tooltip": false
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
@@ -540,6 +619,81 @@
               "value": "/^$chassis$/"
             }
           ]
+        },
+        {
+          "alias": "average power consumption $ucs_domain $chassis",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT meanValues + $average_chassis_total_power FROM (SELECT (mean(\"total_power\") - mean(\"total_power\"))  as meanValues  FROM \"ChassisEnv\"  GROUP BY time($__interval))",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "title": "Chassis Power Consumption",
@@ -611,7 +765,7 @@
               "options": {
                 "mode": "exclude",
                 "names": [
-                  "192.168.0.13 chassis-1 blade-5"
+                  "192.168.0.13 chassis-1 blade-1"
                 ],
                 "prefix": "All except:",
                 "readOnly": true
@@ -682,6 +836,8 @@
           "measurement": "Servers",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT mean(\"power_consumed\") FROM \"Servers\" WHERE (\"domain\" =~ /^$ucs_domain$/ AND \"id\" =~ /^$servers$/ AND \"chassis\" =~ /^$chassis$/) AND $timeFilter GROUP BY time($__interval), \"domain\", \"id\", \"chassis\"",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -711,6 +867,45 @@
               "value": "/^$servers$/"
             }
           ]
+        },
+        {
+          "alias": "average power consumption $ucs_domain $chassis $servers",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT meanValues + $average_server_total_power FROM (SELECT (mean(\"power_consumed\") - mean(\"power_consumed\"))  as meanValues  FROM \"Servers\"  GROUP BY time($__interval))",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "timeFrom": null,
@@ -771,9 +966,14 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "tags": [],
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "$data_source",
         "definition": "select (domain) from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"FIEnvStats\" GROUP BY domain)",
@@ -799,9 +999,14 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "tags": [],
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "$data_source",
         "definition": "select (fi_id) from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"FIEnvStats\" GROUP BY fi_id)",
@@ -855,9 +1060,13 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "$data_source",
         "definition": "select id from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"Servers\" WHERE \"domain\"=~ /^$ucs_domain$/ GROUP BY domain,chassis,type,id)",
@@ -998,8 +1207,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "1432.8921568627452",
-          "value": "1432.8921568627452"
+          "text": "1420.8222222222223",
+          "value": "1420.8222222222223"
         },
         "datasource": "InfluxDB",
         "definition": "SELECT  MEAN((\"total_power\")) FROM \"DomainEnvStats\" WHERE \"domain\"=~ /^$ucs_domain$/ AND $timeFilter\n",
@@ -1021,6 +1230,90 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "575.1425925925926",
+          "value": "575.1425925925926"
+        },
+        "datasource": "InfluxDB",
+        "definition": "SELECT  MEAN((\"total_power\")) FROM \"ChassisEnv\" WHERE (\"domain\" =~ /^$ucs_domain$/ AND \"chassis_id\" =~ /^$chassis$/)  AND $timeFilter\n\n",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "average_chassis_total_power",
+        "options": [],
+        "query": "SELECT  MEAN((\"total_power\")) FROM \"ChassisEnv\" WHERE (\"domain\" =~ /^$ucs_domain$/ AND \"chassis_id\" =~ /^$chassis$/)  AND $timeFilter\n\n",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "243.05416666666667",
+          "value": "243.05416666666667"
+        },
+        "datasource": "InfluxDB",
+        "definition": "SELECT  MEAN((\"total_power\")) FROM \"FIEnvStats\" WHERE (\"fi_id\" =~ /^$fabric_interconnect$/ AND \"domain\" =~ /^$ucs_domain$/)  AND $timeFilter\n\n\n",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "average_fi_total_power",
+        "options": [],
+        "query": "SELECT  MEAN((\"total_power\")) FROM \"FIEnvStats\" WHERE (\"fi_id\" =~ /^$fabric_interconnect$/ AND \"domain\" =~ /^$ucs_domain$/)  AND $timeFilter\n\n\n",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "52.57486111111111",
+          "value": "52.57486111111111"
+        },
+        "datasource": "InfluxDB",
+        "definition": "SELECT  MEAN((\"power_consumed\")) FROM \"Servers\" WHERE \"domain\" =~ /^$ucs_domain$/  AND \"id\" =~ /^$servers$/ AND \"chassis\" =~ /^$chassis$/ AND $timeFilter \n\n\n\n",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "average_server_total_power",
+        "options": [],
+        "query": "SELECT  MEAN((\"power_consumed\")) FROM \"Servers\" WHERE \"domain\" =~ /^$ucs_domain$/  AND \"id\" =~ /^$servers$/ AND \"chassis\" =~ /^$chassis$/ AND $timeFilter \n\n\n\n",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       }
     ]
   },
@@ -1032,5 +1325,5 @@
   "timezone": "",
   "title": "Power Consumption",
   "uid": "CXwb3tn4z",
-  "version": 3
+  "version": 25
 }
