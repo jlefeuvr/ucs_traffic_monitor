@@ -16,9 +16,416 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 13,
-  "iteration": 1666193572274,
+  "iteration": 1667817131763,
   "links": [],
   "panels": [
+    {
+      "datasource": "$data_source",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "flowchartsData": {
+        "flowcharts": [
+          {
+            "allowDrawio": false,
+            "bgColor": null,
+            "center": true,
+            "csv": "",
+            "download": false,
+            "editorTheme": "dark",
+            "editorUrl": "https://www.draw.io",
+            "enableAnim": true,
+            "grid": false,
+            "lock": true,
+            "name": "Main",
+            "scale": true,
+            "tooltip": true,
+            "type": "xml",
+            "url": "http://<YourUrl>/<Your XML/drawio file/api>",
+            "xml": "<mxGraphModel dx=\"1234\" dy=\"891\" grid=\"1\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"1\" pageScale=\"1\" pageWidth=\"850\" pageHeight=\"1100\" math=\"0\" shadow=\"0\"><root><mxCell id=\"U3Yb-M3iW0U3TkC6f_VT-0\"/><mxCell id=\"qjMXR-8qFvfJkbGcyA1T-0\" value=\"\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=13;arcSize=50;fillColor=#E6E6E6;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-0\" vertex=\"1\"><mxGeometry y=\"558\" width=\"1220\" height=\"20\" as=\"geometry\"/></mxCell><UserObject label=\"Locations\" link=\"/d/ri2OFp4Wz/locations\" id=\"qjMXR-8qFvfJkbGcyA1T-1\"><mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-0\" vertex=\"1\"><mxGeometry x=\"30\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/></mxCell></UserObject><UserObject label=\"UCS Domain Overview\" link=\"/d/Inte2EIWk/ucs-domain-overview\" id=\"qjMXR-8qFvfJkbGcyA1T-2\"><mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-0\" vertex=\"1\"><mxGeometry x=\"200\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/></mxCell></UserObject><UserObject label=\"UCS Domain Traffic\" link=\"/d/W7LSukHWz/ucs-domain-traffic\" id=\"qjMXR-8qFvfJkbGcyA1T-3\"><mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-0\" vertex=\"1\"><mxGeometry x=\"370\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/></mxCell></UserObject><UserObject label=\"UCS Chassis Traffic\" link=\"/d/KOM8ZHNWz/ucs-chassis-traffic\" id=\"qjMXR-8qFvfJkbGcyA1T-4\"><mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-0\" vertex=\"1\"><mxGeometry x=\"540\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/></mxCell></UserObject><UserObject label=\"Server Traffic\" link=\"/d/Z0M_N1vWz/service-profile-stats\" id=\"qjMXR-8qFvfJkbGcyA1T-5\"><mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-0\" vertex=\"1\"><mxGeometry x=\"710\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/></mxCell></UserObject><UserObject label=\"Congestion Monitoring\" link=\"/d/Sve32sDZk/congestion-monitoring\" id=\"qjMXR-8qFvfJkbGcyA1T-6\"><mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-0\" vertex=\"1\"><mxGeometry x=\"880\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/></mxCell></UserObject><UserObject label=\"Power Consumption\" link=\"/d/CXwb3tn4z/power-consumption\" id=\"qjMXR-8qFvfJkbGcyA1T-7\"><mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#0085FC;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-0\" vertex=\"1\"><mxGeometry x=\"1050\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/></mxCell></UserObject></root></mxGraphModel>",
+            "zoom": "100%"
+          }
+        ]
+      },
+      "format": "short",
+      "graphId": "flowchart_23763571993",
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 34,
+      "newFlag": false,
+      "pluginVersion": "7.1.0",
+      "rulesData": {
+        "rulesData": [
+          {
+            "aggregation": "current",
+            "alias": "Locations",
+            "colors": [
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "gradient": false,
+            "hidden": false,
+            "invert": false,
+            "linkData": [
+              {
+                "hidden": false,
+                "linkOn": "a",
+                "linkParams": false,
+                "linkUrl": "/d/ri2OFp4Wz/locations?from=${__from}&to=${__to}",
+                "pattern": "locations"
+              }
+            ],
+            "linkProp": "id",
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 1,
+            "overlayIcon": false,
+            "pattern": "FIEnvStats.last",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [],
+            "shapeProp": "id",
+            "stringThresholds": [],
+            "textData": [],
+            "textProp": "id",
+            "thresholds": [],
+            "tooltip": false,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": true,
+            "tpGraphHigh": null,
+            "tpGraphLow": null,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          },
+          {
+            "aggregation": "current",
+            "alias": "domain_overview",
+            "colors": [
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "gradient": false,
+            "hidden": false,
+            "invert": false,
+            "linkData": [
+              {
+                "hidden": false,
+                "linkOn": "a",
+                "linkParams": false,
+                "linkUrl": "/d/Inte2EIWk/ucs-domain-overview?from=${__from}&to=${__to}&var-domain=${domain}",
+                "pattern": "domain_overview"
+              }
+            ],
+            "linkProp": "id",
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 2,
+            "overlayIcon": false,
+            "pattern": "FIEnvStats.last",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [],
+            "shapeProp": "id",
+            "stringThresholds": [],
+            "textData": [],
+            "textProp": "id",
+            "thresholds": [],
+            "tooltip": false,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": true,
+            "tpGraphHigh": null,
+            "tpGraphLow": null,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          },
+          {
+            "aggregation": "current",
+            "alias": "domain_traffic",
+            "colors": [
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "gradient": false,
+            "hidden": false,
+            "invert": false,
+            "linkData": [
+              {
+                "hidden": false,
+                "linkOn": "a",
+                "linkParams": false,
+                "linkUrl": "/d/W7LSukHWz/ucs-domain-traffic?from=${__from}&to=${__to}&var-domain=${domain}",
+                "pattern": "domain_traffic"
+              }
+            ],
+            "linkProp": "id",
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 3,
+            "overlayIcon": false,
+            "pattern": "FIEnvStats.last",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [],
+            "shapeProp": "id",
+            "stringThresholds": [],
+            "textData": [],
+            "textProp": "id",
+            "thresholds": [],
+            "tooltip": false,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": true,
+            "tpGraphHigh": null,
+            "tpGraphLow": null,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          },
+          {
+            "aggregation": "current",
+            "alias": "chassis",
+            "colors": [
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "gradient": false,
+            "hidden": false,
+            "invert": false,
+            "linkData": [
+              {
+                "hidden": false,
+                "linkOn": "a",
+                "linkParams": false,
+                "linkUrl": "/d/KOM8ZHNWz/ucs-chassis-traffic?from=${__from}&to=${__to}&var-domain=${domain}",
+                "pattern": "chassis"
+              }
+            ],
+            "linkProp": "id",
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 4,
+            "overlayIcon": false,
+            "pattern": "FIEnvStats.last",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [],
+            "shapeProp": "id",
+            "stringThresholds": [],
+            "textData": [],
+            "textProp": "id",
+            "thresholds": [],
+            "tooltip": false,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": true,
+            "tpGraphHigh": null,
+            "tpGraphLow": null,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          },
+          {
+            "aggregation": "current",
+            "alias": "servers",
+            "colors": [
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "gradient": false,
+            "hidden": false,
+            "invert": false,
+            "linkData": [
+              {
+                "hidden": false,
+                "linkOn": "a",
+                "linkParams": false,
+                "linkUrl": "/d/Z0M_N1vWz/service-profile-stats?from=${__from}&to=${__to}&var-domain=${domain}",
+                "pattern": "servers"
+              }
+            ],
+            "linkProp": "id",
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 5,
+            "overlayIcon": false,
+            "pattern": "FIEnvStats.last",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [],
+            "shapeProp": "id",
+            "stringThresholds": [],
+            "textData": [],
+            "textProp": "id",
+            "thresholds": [],
+            "tooltip": false,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": true,
+            "tpGraphHigh": null,
+            "tpGraphLow": null,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          },
+          {
+            "aggregation": "current",
+            "alias": "Ingress Congestion",
+            "colors": [
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "gradient": false,
+            "hidden": false,
+            "invert": false,
+            "linkData": [
+              {
+                "hidden": false,
+                "linkOn": "a",
+                "linkParams": false,
+                "linkUrl": "/d/Sve32sDZk/fi-uplink-port-ingress-congestion-monitoring?from=${__from}&to=${__to}&var-domain=${domain}",
+                "pattern": "ingress_congestion"
+              }
+            ],
+            "linkProp": "id",
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 6,
+            "overlayIcon": false,
+            "pattern": "FIEnvStats.last",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [],
+            "shapeProp": "id",
+            "stringThresholds": [],
+            "textData": [],
+            "textProp": "id",
+            "thresholds": [],
+            "tooltip": false,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": true,
+            "tpGraphHigh": null,
+            "tpGraphLow": null,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          }
+        ]
+      },
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "FIEnvStats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "load"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "domain",
+              "operator": "=~",
+              "value": "/^$domain$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "transparent": true,
+      "type": "agenty-flowcharting-panel",
+      "valueName": "current",
+      "version": "0.7.0"
+    },
     {
       "collapsed": false,
       "datasource": null,
@@ -26,7 +433,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 2
       },
       "id": 30,
       "panels": [],
@@ -83,7 +490,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 1
+        "y": 3
       },
       "id": 6,
       "options": {
@@ -225,7 +632,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 1
+        "y": 3
       },
       "id": 32,
       "options": {
@@ -293,7 +700,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 11
       },
       "id": 28,
       "panels": [],
@@ -350,7 +757,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 10
+        "y": 12
       },
       "id": 2,
       "options": {
@@ -483,7 +890,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 21
       },
       "id": 26,
       "panels": [],
@@ -540,7 +947,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 20
+        "y": 22
       },
       "id": 24,
       "options": {
@@ -706,7 +1113,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 28
+        "y": 30
       },
       "id": 18,
       "panels": [],
@@ -757,38 +1164,13 @@
           },
           "unit": "watt"
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "192.168.0.13 chassis-1 blade-1"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "graph": true,
-                  "legend": false,
-                  "tooltip": false
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 29
+        "y": 31
       },
       "id": 20,
       "options": {
@@ -967,7 +1349,6 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "tags": [],
           "text": [
             "All"
           ],
@@ -1000,7 +1381,6 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "tags": [],
           "text": [
             "All"
           ],
@@ -1037,7 +1417,7 @@
           "value": "$__all"
         },
         "datasource": "InfluxDB",
-        "definition": " select (chassis_id) from (SELECT last(\"power_psu1\") FROM \"$db\".\"$rp\".\"ChassisEnv\" WHERE \"domain\" =~ /^$ucs_domain$/ GROUP BY chassis_id)",
+        "definition": " select (chassis_id) from (SELECT last(\"power_psu1\") FROM \"$db\".\"$rp\".\"ChassisEnv\" WHERE \"domain\" =~ /^$ucs_domain$/ AND $timeFilter GROUP BY chassis_id)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -1046,8 +1426,8 @@
         "multi": true,
         "name": "chassis",
         "options": [],
-        "query": " select (chassis_id) from (SELECT last(\"power_psu1\") FROM \"$db\".\"$rp\".\"ChassisEnv\" WHERE \"domain\" =~ /^$ucs_domain$/ GROUP BY chassis_id)",
-        "refresh": 1,
+        "query": " select (chassis_id) from (SELECT last(\"power_psu1\") FROM \"$db\".\"$rp\".\"ChassisEnv\" WHERE \"domain\" =~ /^$ucs_domain$/ AND $timeFilter GROUP BY chassis_id)",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -1207,8 +1587,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "1420.8222222222223",
-          "value": "1420.8222222222223"
+          "text": "1279.7833333333333",
+          "value": "1279.7833333333333"
         },
         "datasource": "InfluxDB",
         "definition": "SELECT  MEAN((\"total_power\")) FROM \"DomainEnvStats\" WHERE \"domain\"=~ /^$ucs_domain$/ AND $timeFilter\n",
@@ -1235,8 +1615,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "575.1425925925926",
-          "value": "575.1425925925926"
+          "text": "719.6",
+          "value": "719.6"
         },
         "datasource": "InfluxDB",
         "definition": "SELECT  MEAN((\"total_power\")) FROM \"ChassisEnv\" WHERE (\"domain\" =~ /^$ucs_domain$/ AND \"chassis_id\" =~ /^$chassis$/)  AND $timeFilter\n\n",
@@ -1263,8 +1643,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "243.05416666666667",
-          "value": "243.05416666666667"
+          "text": "244.09166666666667",
+          "value": "244.09166666666667"
         },
         "datasource": "InfluxDB",
         "definition": "SELECT  MEAN((\"total_power\")) FROM \"FIEnvStats\" WHERE (\"fi_id\" =~ /^$fabric_interconnect$/ AND \"domain\" =~ /^$ucs_domain$/)  AND $timeFilter\n\n\n",
@@ -1291,8 +1671,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "52.57486111111111",
-          "value": "52.57486111111111"
+          "text": "84.79212962962963",
+          "value": "84.79212962962963"
         },
         "datasource": "InfluxDB",
         "definition": "SELECT  MEAN((\"power_consumed\")) FROM \"Servers\" WHERE \"domain\" =~ /^$ucs_domain$/  AND \"id\" =~ /^$servers$/ AND \"chassis\" =~ /^$chassis$/ AND $timeFilter \n\n\n\n",
@@ -1325,5 +1705,5 @@
   "timezone": "",
   "title": "Power Consumption",
   "uid": "CXwb3tn4z",
-  "version": 25
+  "version": 31
 }
