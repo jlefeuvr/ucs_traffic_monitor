@@ -3,7 +3,7 @@ Full-blown traffic and power consumption monitoring of Cisco UCS servers using G
 
 ## features comparison with original UTM
 This fork includes on top of original features:
--power consumption monitoring
+- power consumption monitoring
 
 ## features
 
@@ -53,8 +53,8 @@ Two options (ONLY OVA INSTALLATION HAS BEEN VALIDATED FOR THE POWER CONSUMPTION)
 
 ## Installation (With existing UTM)
 
--Replace the existing python script (/usr/local/telegraf/ucs_traffic_monitor.py) with the updated version from this directory (telegraf/ucs_traffic_monitor.py)
--Import the dashboard files (json files in grafana/dashboard) into your grafana (using the UI, Dashboard --> Manage --> import --> import json file, select override options)
+- Replace the existing python script (/usr/local/telegraf/ucs_traffic_monitor.py) with the updated version from this directory (telegraf/ucs_traffic_monitor.py)
+- Import the dashboard files (json files in grafana/dashboard) into your grafana (using the UI, Dashboard --> Manage --> import --> import json file, select override options)
 
 ### OVA installation (Preferred)
 1.Download and deploy the OVA:
