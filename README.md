@@ -1,6 +1,12 @@
 # UCS Traffic Monitoring (UTM) updated with power consumption
 Full-blown traffic and power consumption monitoring of Cisco UCS servers using Grafana, InfluxDB and Telegraf.
 
+## features comparison with original UTM
+This fork includes on top of original features:
+-power consumption monitoring
+
+## features
+
 Locations Dashboard
 ![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/07/utm_0.4-1.png)
 
@@ -37,13 +43,18 @@ and much more...
 - **Data storage**: [InfluxDB](https://github.com/influxdata/influxdb), a time-series database
 - **Visualization**: [Grafana](https://github.com/grafana/grafana)
 
-## Installation
+## Installation (without Basic UTM)
 - Tested OS: CentOS 7.x. Should work on other OS also.
 - Python version: Version 3 only. Should be able to work on Python 2 also with minor modification.
 
 Two options (ONLY OVA INSTALLATION HAS BEEN VALIDATED FOR THE POWER CONSUMPTION):
 - DIY Installation: Self install the required packages (or take a look to [ansible-install](ansible-install) folder where you could let the machine work for you)
 - OVA - Required packages are pre-installed on CentOS 7.6 OVA
+
+## Installation (With existing UTM)
+
+-Replace the existing python script (/usr/local/telegraf/ucs_traffic_monitor.py) with the updated version from this directory (telegraf/ucs_traffic_monitor.py)
+-Import the dashboard files (json files in grafana/dashboard) into your grafana (using the UI, Dashboard --> Manage --> import --> import json file, select override options)
 
 ### OVA installation (Preferred)
 1.Download and deploy the OVA:

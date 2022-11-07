@@ -102,10 +102,10 @@ class_ids = ['TopSystem',
              'ComputeRackUnit',
              'EquipmentPsuInputStats',
              'ComputeMbPowerStats',
-             'EquipmentPsuStats'
+             'EquipmentChassisStats'
             ]
 
-#'EquipmentPsuStats'
+
 ###############################################################################
 # BEGIN: Generic functions
 ###############################################################################
@@ -1530,7 +1530,6 @@ def parse_fi_stats(domain_ip, fcpio, sanpc, sanpcep, fcstats, fcerr, ethpio,
 
     logger.info('Done: Parse fi_stats for {}'.format(domain_ip))
 
-#chassis_power
 def parse_compute_inventory(domain_ip, blade, ru, compute_power, chassis_power):
     """
     Use the output of query_classid from UCS to update global stats_dict
@@ -1540,7 +1539,7 @@ def parse_compute_inventory(domain_ip, blade, ru, compute_power, chassis_power):
     blade (managedobjectlist as returned by ComputeBlade)
     ru (managedobjectlist as returned by ComputeRackUnit)
     compute_power (managedobjectlist as returned by ComputeMbPowerStats)
-    chassis_power (managedobjectlist as returned by EquipmentPsuStats)
+    chassis_power (managedobjectlist as returned by EquipmentChassisStats)
     Returns:
     None
 
@@ -1643,13 +1642,10 @@ def parse_compute_inventory(domain_ip, blade, ru, compute_power, chassis_power):
             server_key=(item.dn).split('/')[2]
             chassis_dict[chassis_key]["blades"][server_key]["power"]=item.consumed_power.split('.')[0]
 
-    for item in chassis_dict:
-        chassis_dict[item]['power_psu1']='0'
-        chassis_dict[item]['power_psu2']='0'
-        chassis_dict[item]['power_psu3']='0'
-        chassis_dict[item]['power_psu4']='0'
     for item in chassis_power:
-        chassis_dict[item.dn.split('/')[1]]['power_psu'+get_psu_id_from_dn(item.dn)]=item.output_power.split('.')[0]
+        chassis_dict[item.dn.split('/')[1]]["total_input_power"]=item.input_power.split('.')[0]
+        chassis_dict[item.dn.split('/')[1]]["total_output_power"]=item.output_power.split('.')[0]
+
 
 def get_total_power_consumed(domain_ip):
     """
@@ -1680,7 +1676,7 @@ def get_total_power_consumed(domain_ip):
         total_fi_power= int(fi_a_dict["power_psu1"]) + int(fi_a_dict["power_psu2"]) + int(fi_b_dict["power_psu1"]) + int(fi_b_dict["power_psu2"])
 
     for chassis in chassis_dict:
-        total_chassis_power=  total_chassis_power + int(chassis_dict[chassis]['power_psu1']) + int(chassis_dict[chassis]['power_psu2']) + int(chassis_dict[chassis]['power_psu3']) +int(chassis_dict[chassis]['power_psu4'])
+        total_chassis_power=  total_chassis_power + int(chassis_dict[chassis]["total_input_power"])
 
     for ru in ru_dict:
         total_rack_power= total_rack_power + int(ru_dict[ru]['power'])
@@ -2139,7 +2135,7 @@ def parse_raw_sdk_stats():
                                     obj['ComputeBlade'],
                                     obj['ComputeRackUnit'],
                                     obj['ComputeMbPowerStats'],
-                                    obj['EquipmentPsuStats'])
+                                    obj['EquipmentChassisStats'])
         except Exception as e:
             s = ''
             for item in obj['ComputeBlade']:
@@ -2148,7 +2144,7 @@ def parse_raw_sdk_stats():
                 s = s + (str)(item)
             for item in obj['ComputeMbPowerStats']:
                 s = s + (str)(item) 
-            for item in obj['EquipmentPsuStats']:
+            for item in obj['EquipmentChassisStats']:
                 s = s + (str)(item) 
               
             logger.exception('parse_compute_inventory:{}\n{}'.format(e, s))
@@ -2740,11 +2736,8 @@ def print_output_in_influxdb_lp():
             chassis_env_prefix = chassis_env_prefix + domain_ip
             chassis_env_tags = chassis_env_tags + 'chassis_id=' + chassis_id + ',location=' + \
                             location
-            chassis_env_fields = chassis_env_fields + 'power_psu1=' + chassis_dict[chassis_id]['power_psu1'] + \
-                    ',power_psu2=' + chassis_dict[chassis_id]['power_psu2'] + \
-                    ',power_psu3=' + chassis_dict[chassis_id]['power_psu3'] + \
-                    ',power_psu4=' + chassis_dict[chassis_id]['power_psu4'] + \
-                    ',total_power=' +  str(int(chassis_dict[chassis_id]['power_psu1']) + int(chassis_dict[chassis_id]['power_psu2']) +int(chassis_dict[chassis_id]['power_psu3']) +int(chassis_dict[chassis_id]['power_psu4']))
+            chassis_env_fields = chassis_env_fields + 'total_input_power=' + chassis_dict[chassis_id]['total_input_power'] + \
+                    ',total_output_power=' + chassis_dict[chassis_id]['total_output_power']
             chassis_env_fields = chassis_env_fields + '\n'
             final_print_string = final_print_string + chassis_env_prefix + \
                                         chassis_env_tags + chassis_env_fields
