@@ -1,4 +1,73 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    },
+    {
+      "name": "VAR_DB",
+      "type": "constant",
+      "label": "Database",
+      "value": "telegraf",
+      "description": ""
+    },
+    {
+      "name": "VAR_RP",
+      "type": "constant",
+      "label": "Retention Policy",
+      "value": "autogen",
+      "description": ""
+    },
+    {
+      "name": "VAR_POLLING_INTERVAL",
+      "type": "constant",
+      "label": "polling_interval",
+      "value": "60",
+      "description": ""
+    }
+  ],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "agenty-flowcharting-panel",
+      "name": "FlowCharting",
+      "version": "0.7.0"
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "7.5.7"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -17,8 +86,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3,
-  "iteration": 1623390832171,
+  "id": null,
+  "iteration": 1667835633920,
   "links": [],
   "panels": [
     {
@@ -94,7 +163,7 @@
             "allowDrawio": false,
             "bgColor": null,
             "center": true,
-            "csv": "## See more information for the syntax at https://drawio-app.com/import-from-csv-to-drawio/\n##\n## Example CSV. Use ## for comments and # for configuration.\n## The following names are reserved and should not be used (or ignored):\n## id, tooltip, placeholder(s), link and label (see below)\n##\n#\n## Node label with placeholders and HTML.\n## Default is '%name_of_first_column%'.\n#\n# label: %name%<br><i style=\"color:gray;\">%position%</i><br><a href=\"mailto:%email%\">Email</a>\n#\n## Node style (placeholders are replaced once).\n## Default is the current style for nodes.\n#\n# style: label;image=%image%;whiteSpace=wrap;html=1;rounded=1;fillColor=%fill%;strokeColor=%stroke%;\n#\n## Parent style for nodes with child nodes (placeholders are replaced once).\n#\n# parentstyle: swimlane;whiteSpace=wrap;html=1;childLayout=stackLayout;horizontal=1;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;\n#\n## Optional column name that contains a reference to a named style in styles.\n## Default is the current style for nodes.\n#\n# stylename: -\n#\n## JSON for named styles of the form {\"name\": \"style\", \"name\": \"style\"} where style is a cell style with\n## placeholders that are replaced once.\n#\n# styles: -\n#\n## Optional column name that contains a reference to a named label in labels.\n## Default is the current label.\n#\n# labelname: -\n#\n## JSON for named labels of the form {\"name\": \"label\", \"name\": \"label\"} where label is a cell label with\n## placeholders.\n#\n# labels: -\n#\n## Uses the given column name as the identity for cells (updates existing cells).\n## Default is no identity (empty value or -).\n#\n# identity: -\n#\n## Uses the given column name as the parent reference for cells. Default is no parent (empty or -).\n## The identity above is used for resolving the reference so it must be specified.\n#\n# parent: -\n#\n## Adds a prefix to the identity of cells to make sure they do not collide with existing cells (whose\n## IDs are numbers from 0..n, sometimes with a GUID prefix in the context of realtime collaboration).\n## Default is csvimport-.\n#\n# namespace: csvimport-\n#\n## Connections between rows (\"from\": source colum, \"to\": target column).\n## Label, style and invert are optional. Defaults are '', current style and false.\n## If placeholders are used in the style, they are replaced with data from the source.\n## An optional placeholders can be set to target to use data from the target instead.\n## In addition to label, an optional fromlabel and tolabel can be used to name the column\n## that contains the text for the label in the edges source or target (invert ignored).\n## The label is concatenated in the form fromlabel + label + tolabel if all are defined.\n## The target column may contain a comma-separated list of values.\n## Multiple connect entries are allowed.\n#\n# connect: {\"from\": \"manager\", \"to\": \"name\", \"invert\": true, \"label\": \"manages\", \\\n#          \"style\": \"curved=1;endArrow=blockThin;endFill=1;fontSize=11;\"}\n# connect: {\"from\": \"refs\", \"to\": \"id\", \"style\": \"curved=1;fontSize=11;\"}\n#\n## Node x-coordinate. Possible value is a column name. Default is empty. Layouts will\n## override this value.\n#\n# left: \n#\n## Node y-coordinate. Possible value is a column name. Default is empty. Layouts will\n## override this value.\n#\n# top: \n#\n## Node width. Possible value is a number (in px), auto or an @ sign followed by a column\n## name that contains the value for the width. Default is auto.\n#\n# width: auto\n#\n## Node height. Possible value is a number (in px), auto or an @ sign followed by a column\n## name that contains the value for the height. Default is auto.\n#\n# height: auto\n#\n## Padding for autosize. Default is 0.\n#\n# padding: -12\n#\n## Comma-separated list of ignored columns for metadata. (These can be\n## used for connections and styles but will not be added as metadata.)\n#\n# ignore: id,image,fill,stroke,refs,manager\n#\n## Column to be renamed to link attribute (used as link).\n#\n# link: url\n#\n## Spacing between nodes. Default is 40.\n#\n# nodespacing: 40\n#\n## Spacing between levels of hierarchical layouts. Default is 100.\n#\n# levelspacing: 100\n#\n## Spacing between parallel edges. Default is 40. Use 0 to disable.\n#\n# edgespacing: 40\n#\n## Name or JSON of layout. Possible values are auto, none, verticaltree, horizontaltree,\n## verticalflow, horizontalflow, organic, circle or a JSON string as used in Layout, Apply.\n## Default is auto.\n#\n# layout: auto\n#\n## ---- CSV below this line. First line are column names. ----\nname,position,id,location,manager,email,fill,stroke,refs,url,image\nEvan Miller,CFO,emi,Office 1,,me@example.com,#dae8fc,#6c8ebf,,https://www.draw.io,https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-9-2-128.png\nEdward Morrison,Brand Manager,emo,Office 2,Evan Miller,me@example.com,#d5e8d4,#82b366,,https://www.draw.io,https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-10-3-128.png\nRon Donovan,System Admin,rdo,Office 3,Evan Miller,me@example.com,#d5e8d4,#82b366,\"emo,tva\",https://www.draw.io,https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-2-128.png\nTessa Valet,HR Director,tva,Office 4,Evan Miller,me@example.com,#d5e8d4,#82b366,,https://www.draw.io,https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-3-128.png\n",
+            "csv": "",
             "download": false,
             "editorTheme": "dark",
             "editorUrl": "https://www.draw.io",
@@ -133,9 +202,6 @@
             "column": "Time",
             "dateFormat": "YYYY-MM-DD HH:mm:ss",
             "decimals": 2,
-            "eventData": [],
-            "eventProp": "id",
-            "eventRegEx": false,
             "gradient": false,
             "hidden": false,
             "invert": false,
@@ -149,7 +215,6 @@
               }
             ],
             "linkProp": "id",
-            "linkRegEx": true,
             "mappingType": 1,
             "metricType": "serie",
             "order": 1,
@@ -161,18 +226,16 @@
             "sanitize": false,
             "shapeData": [],
             "shapeProp": "id",
-            "shapeRegEx": true,
             "stringThresholds": [],
             "textData": [],
             "textProp": "id",
-            "textRegEx": true,
             "thresholds": [],
             "tooltip": false,
             "tooltipColors": false,
             "tooltipLabel": "",
             "tooltipOn": "a",
             "tpDirection": "v",
-            "tpGraph": false,
+            "tpGraph": true,
             "tpGraphHigh": null,
             "tpGraphLow": null,
             "tpGraphScale": "linear",
@@ -191,9 +254,6 @@
             "column": "Time",
             "dateFormat": "YYYY-MM-DD HH:mm:ss",
             "decimals": 2,
-            "eventData": [],
-            "eventProp": "id",
-            "eventRegEx": false,
             "gradient": false,
             "hidden": false,
             "invert": false,
@@ -207,7 +267,6 @@
               }
             ],
             "linkProp": "id",
-            "linkRegEx": true,
             "mappingType": 1,
             "metricType": "serie",
             "order": 2,
@@ -219,18 +278,16 @@
             "sanitize": false,
             "shapeData": [],
             "shapeProp": "id",
-            "shapeRegEx": true,
             "stringThresholds": [],
             "textData": [],
             "textProp": "id",
-            "textRegEx": true,
             "thresholds": [],
             "tooltip": false,
             "tooltipColors": false,
             "tooltipLabel": "",
             "tooltipOn": "a",
             "tpDirection": "v",
-            "tpGraph": false,
+            "tpGraph": true,
             "tpGraphHigh": null,
             "tpGraphLow": null,
             "tpGraphScale": "linear",
@@ -249,9 +306,6 @@
             "column": "Time",
             "dateFormat": "YYYY-MM-DD HH:mm:ss",
             "decimals": 2,
-            "eventData": [],
-            "eventProp": "id",
-            "eventRegEx": false,
             "gradient": false,
             "hidden": false,
             "invert": false,
@@ -265,7 +319,6 @@
               }
             ],
             "linkProp": "id",
-            "linkRegEx": true,
             "mappingType": 1,
             "metricType": "serie",
             "order": 3,
@@ -277,18 +330,16 @@
             "sanitize": false,
             "shapeData": [],
             "shapeProp": "id",
-            "shapeRegEx": true,
             "stringThresholds": [],
             "textData": [],
             "textProp": "id",
-            "textRegEx": true,
             "thresholds": [],
             "tooltip": false,
             "tooltipColors": false,
             "tooltipLabel": "",
             "tooltipOn": "a",
             "tpDirection": "v",
-            "tpGraph": false,
+            "tpGraph": true,
             "tpGraphHigh": null,
             "tpGraphLow": null,
             "tpGraphScale": "linear",
@@ -307,9 +358,6 @@
             "column": "Time",
             "dateFormat": "YYYY-MM-DD HH:mm:ss",
             "decimals": 2,
-            "eventData": [],
-            "eventProp": "id",
-            "eventRegEx": false,
             "gradient": false,
             "hidden": false,
             "invert": false,
@@ -323,7 +371,6 @@
               }
             ],
             "linkProp": "id",
-            "linkRegEx": true,
             "mappingType": 1,
             "metricType": "serie",
             "order": 4,
@@ -335,18 +382,16 @@
             "sanitize": false,
             "shapeData": [],
             "shapeProp": "id",
-            "shapeRegEx": true,
             "stringThresholds": [],
             "textData": [],
             "textProp": "id",
-            "textRegEx": true,
             "thresholds": [],
             "tooltip": false,
             "tooltipColors": false,
             "tooltipLabel": "",
             "tooltipOn": "a",
             "tpDirection": "v",
-            "tpGraph": false,
+            "tpGraph": true,
             "tpGraphHigh": null,
             "tpGraphLow": null,
             "tpGraphScale": "linear",
@@ -365,9 +410,6 @@
             "column": "Time",
             "dateFormat": "YYYY-MM-DD HH:mm:ss",
             "decimals": 2,
-            "eventData": [],
-            "eventProp": "id",
-            "eventRegEx": false,
             "gradient": false,
             "hidden": false,
             "invert": false,
@@ -381,7 +423,6 @@
               }
             ],
             "linkProp": "id",
-            "linkRegEx": true,
             "mappingType": 1,
             "metricType": "serie",
             "order": 5,
@@ -393,18 +434,16 @@
             "sanitize": false,
             "shapeData": [],
             "shapeProp": "id",
-            "shapeRegEx": true,
             "stringThresholds": [],
             "textData": [],
             "textProp": "id",
-            "textRegEx": true,
             "thresholds": [],
             "tooltip": false,
             "tooltipColors": false,
             "tooltipLabel": "",
             "tooltipOn": "a",
             "tpDirection": "v",
-            "tpGraph": false,
+            "tpGraph": true,
             "tpGraphHigh": null,
             "tpGraphLow": null,
             "tpGraphScale": "linear",
@@ -423,9 +462,6 @@
             "column": "Time",
             "dateFormat": "YYYY-MM-DD HH:mm:ss",
             "decimals": 2,
-            "eventData": [],
-            "eventProp": "id",
-            "eventRegEx": false,
             "gradient": false,
             "hidden": false,
             "invert": false,
@@ -439,7 +475,6 @@
               }
             ],
             "linkProp": "id",
-            "linkRegEx": true,
             "mappingType": 1,
             "metricType": "serie",
             "order": 6,
@@ -451,18 +486,16 @@
             "sanitize": false,
             "shapeData": [],
             "shapeProp": "id",
-            "shapeRegEx": true,
             "stringThresholds": [],
             "textData": [],
             "textProp": "id",
-            "textRegEx": true,
             "thresholds": [],
             "tooltip": false,
             "tooltipColors": false,
             "tooltipLabel": "",
             "tooltipOn": "a",
             "tpDirection": "v",
-            "tpGraph": false,
+            "tpGraph": true,
             "tpGraphHigh": null,
             "tpGraphLow": null,
             "tpGraphScale": "linear",
@@ -523,7 +556,7 @@
       "transparent": true,
       "type": "agenty-flowcharting-panel",
       "valueName": "current",
-      "version": "0.9.0"
+      "version": "0.7.0"
     },
     {
       "datasource": "$data_source",
@@ -2405,9 +2438,9 @@
           "repeatDirection": "v",
           "scopedVars": {
             "bp_port": {
-              "selected": true,
-              "text": "1/05",
-              "value": "1/05"
+              "selected": false,
+              "text": "1/01",
+              "value": "1/01"
             }
           },
           "seriesOverrides": [
@@ -2643,9 +2676,9 @@
           "repeatDirection": "v",
           "scopedVars": {
             "bp_port": {
-              "selected": true,
-              "text": "1/05",
-              "value": "1/05"
+              "selected": false,
+              "text": "1/01",
+              "value": "1/01"
             }
           },
           "seriesOverrides": [
@@ -2846,9 +2879,21 @@
         "hide": 2,
         "label": "Database",
         "name": "db",
-        "query": "telegraf",
+        "query": "${VAR_DB}",
         "skipUrlSync": false,
-        "type": "constant"
+        "type": "constant",
+        "current": {
+          "value": "${VAR_DB}",
+          "text": "${VAR_DB}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_DB}",
+            "text": "${VAR_DB}",
+            "selected": false
+          }
+        ]
       },
       {
         "description": null,
@@ -2856,9 +2901,21 @@
         "hide": 2,
         "label": "Retention Policy",
         "name": "rp",
-        "query": "autogen",
+        "query": "${VAR_RP}",
         "skipUrlSync": false,
-        "type": "constant"
+        "type": "constant",
+        "current": {
+          "value": "${VAR_RP}",
+          "text": "${VAR_RP}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_RP}",
+            "text": "${VAR_RP}",
+            "selected": false
+          }
+        ]
       },
       {
         "current": {
@@ -2886,18 +2943,25 @@
         "hide": 2,
         "label": null,
         "name": "polling_interval",
-        "query": "60",
+        "query": "${VAR_POLLING_INTERVAL}",
         "skipUrlSync": false,
-        "type": "constant"
+        "type": "constant",
+        "current": {
+          "value": "${VAR_POLLING_INTERVAL}",
+          "text": "${VAR_POLLING_INTERVAL}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_POLLING_INTERVAL}",
+            "text": "${VAR_POLLING_INTERVAL}",
+            "selected": false
+          }
+        ]
       },
       {
         "allValue": null,
-        "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
-        },
+        "current": {},
         "datasource": "$data_source",
         "definition": "show tag values from \"$db\".\"$rp\".\"FIEnvStats\" with key=domain where $timeFilter",
         "description": null,
@@ -2921,12 +2985,7 @@
       },
       {
         "allValue": null,
-        "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
-        },
+        "current": {},
         "datasource": "$data_source",
         "definition": "show tag values from \"$db\".\"$rp\".\"BackplanePortStats\" with key=chassis where domain =~ /$domain/ and  $timeFilter",
         "description": null,
@@ -2950,11 +3009,7 @@
       },
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
+        "current": {},
         "datasource": "$data_source",
         "definition": "show tag values from \"$db\".\"$rp\".\"BackplanePortStats\" with key=bp_port where domain =~ /$domain/ and chassis =~ /$chassis/ and  $timeFilter",
         "description": null,
@@ -2978,12 +3033,7 @@
       },
       {
         "allValue": null,
-        "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
-        },
+        "current": {},
         "datasource": "$data_source",
         "definition": "SELECT \"name\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE \"domain\" =~ /^$domain$/  and $timeFilter",
         "description": null,
@@ -3007,12 +3057,7 @@
       },
       {
         "allValue": null,
-        "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
-        },
+        "current": {},
         "datasource": "$data_source",
         "definition": "select location from (select location,last(load) from \"$db\".\"$rp\".\"FIEnvStats\" where (\"domain\" =~ /^$domain$/)) where  $timeFilter",
         "description": null,
@@ -3036,13 +3081,8 @@
       },
       {
         "allValue": null,
-        "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
-        },
-        "datasource": "${data_source}",
+        "current": {},
+        "datasource": "${DS_INFLUXDB}",
         "definition": "select last(utm_collector_ver) from \"$db\".\"$rp\".\"FIEnvStats\"",
         "description": null,
         "error": null,
@@ -3096,5 +3136,5 @@
   "timezone": "browser",
   "title": "UCS Chassis - Traffic",
   "uid": "KOM8ZHNWz",
-  "version": 15
+  "version": 4
 }

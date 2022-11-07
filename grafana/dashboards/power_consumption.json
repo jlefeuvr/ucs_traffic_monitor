@@ -1,4 +1,81 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    },
+    {
+      "name": "VAR_DB",
+      "type": "constant",
+      "label": "Database",
+      "value": "telegraf",
+      "description": ""
+    },
+    {
+      "name": "VAR_RP",
+      "type": "constant",
+      "label": "Retention Policy",
+      "value": "autogen",
+      "description": ""
+    },
+    {
+      "name": "VAR_POLLING_INTERVAL",
+      "type": "constant",
+      "label": "polling_interval",
+      "value": "60.0",
+      "description": ""
+    },
+    {
+      "name": "VAR_FC_DATA_RATE",
+      "type": "constant",
+      "label": "fc_data_rate",
+      "value": "0.85",
+      "description": ""
+    },
+    {
+      "name": "VAR_5M_IN_MS",
+      "type": "constant",
+      "label": "5m_in_ms",
+      "value": "300000",
+      "description": ""
+    }
+  ],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "agenty-flowcharting-panel",
+      "name": "FlowCharting",
+      "version": "0.7.0"
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "7.5.7"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -15,8 +92,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 15,
-  "iteration": 1667825317561,
+  "id": null,
+  "iteration": 1667835671787,
   "links": [],
   "panels": [
     {
@@ -1311,9 +1388,21 @@
         "hide": 2,
         "label": "Database",
         "name": "db",
-        "query": "telegraf",
+        "query": "${VAR_DB}",
         "skipUrlSync": false,
-        "type": "constant"
+        "type": "constant",
+        "current": {
+          "value": "${VAR_DB}",
+          "text": "${VAR_DB}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_DB}",
+            "text": "${VAR_DB}",
+            "selected": false
+          }
+        ]
       },
       {
         "description": null,
@@ -1321,9 +1410,21 @@
         "hide": 2,
         "label": "Retention Policy",
         "name": "rp",
-        "query": "autogen",
+        "query": "${VAR_RP}",
         "skipUrlSync": false,
-        "type": "constant"
+        "type": "constant",
+        "current": {
+          "value": "${VAR_RP}",
+          "text": "${VAR_RP}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_RP}",
+            "text": "${VAR_RP}",
+            "selected": false
+          }
+        ]
       },
       {
         "current": {
@@ -1347,11 +1448,7 @@
       },
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
+        "current": {},
         "datasource": "$data_source",
         "definition": "select (domain) from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"FIEnvStats\" GROUP BY domain)",
         "description": null,
@@ -1375,11 +1472,7 @@
       },
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
+        "current": {},
         "datasource": "$data_source",
         "definition": "select (fi_id) from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"FIEnvStats\" GROUP BY fi_id)",
         "description": null,
@@ -1403,12 +1496,8 @@
       },
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": "InfluxDB",
+        "current": {},
+        "datasource": "${DS_INFLUXDB}",
         "definition": " select (chassis_id) from (SELECT last(\"total_input_power\") FROM \"$db\".\"$rp\".\"ChassisEnv\" WHERE \"domain\" =~ /^$ucs_domain$/ AND $timeFilter GROUP BY chassis_id)",
         "description": null,
         "error": null,
@@ -1431,11 +1520,7 @@
       },
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
+        "current": {},
         "datasource": "$data_source",
         "definition": "select id from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"Servers\" WHERE \"domain\"=~ /^$ucs_domain$/ GROUP BY domain,chassis,type,id)",
         "description": null,
@@ -1459,11 +1544,7 @@
       },
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
+        "current": {},
         "datasource": "$data_source",
         "definition": "show tag values from \"$db\".\"$rp\".\"Servers\" with key=location ",
         "description": null,
@@ -1491,17 +1572,25 @@
         "hide": 2,
         "label": null,
         "name": "polling_interval",
-        "query": "60.0",
+        "query": "${VAR_POLLING_INTERVAL}",
         "skipUrlSync": false,
-        "type": "constant"
+        "type": "constant",
+        "current": {
+          "value": "${VAR_POLLING_INTERVAL}",
+          "text": "${VAR_POLLING_INTERVAL}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_POLLING_INTERVAL}",
+            "text": "${VAR_POLLING_INTERVAL}",
+            "selected": false
+          }
+        ]
       },
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "2",
-          "value": "2"
-        },
+        "current": {},
         "datasource": "$data_source",
         "definition": " SHOW TAG VALUES CARDINALITY FROM \"$db\".\"$rp\".\"FIEnvStats\" WITH KEY=location",
         "description": null,
@@ -1529,9 +1618,21 @@
         "hide": 2,
         "label": null,
         "name": "fc_data_rate",
-        "query": "0.85",
+        "query": "${VAR_FC_DATA_RATE}",
         "skipUrlSync": false,
-        "type": "constant"
+        "type": "constant",
+        "current": {
+          "value": "${VAR_FC_DATA_RATE}",
+          "text": "${VAR_FC_DATA_RATE}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_FC_DATA_RATE}",
+            "text": "${VAR_FC_DATA_RATE}",
+            "selected": false
+          }
+        ]
       },
       {
         "description": null,
@@ -1539,18 +1640,26 @@
         "hide": 2,
         "label": null,
         "name": "5m_in_ms",
-        "query": "300000",
+        "query": "${VAR_5M_IN_MS}",
         "skipUrlSync": false,
-        "type": "constant"
+        "type": "constant",
+        "current": {
+          "value": "${VAR_5M_IN_MS}",
+          "text": "${VAR_5M_IN_MS}",
+          "selected": false
+        },
+        "options": [
+          {
+            "value": "${VAR_5M_IN_MS}",
+            "text": "${VAR_5M_IN_MS}",
+            "selected": false
+          }
+        ]
       },
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "0.52",
-          "value": "0.52"
-        },
-        "datasource": "InfluxDB",
+        "current": {},
+        "datasource": "${DS_INFLUXDB}",
         "definition": "select last(utm_collector_ver) from \"$db\".\"$rp\".\"FIEnvStats\"",
         "description": null,
         "error": null,
@@ -1573,12 +1682,8 @@
       },
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "1365.1338028169014",
-          "value": "1365.1338028169014"
-        },
-        "datasource": "InfluxDB",
+        "current": {},
+        "datasource": "${DS_INFLUXDB}",
         "definition": "SELECT  MEAN((\"total_power\")) FROM \"DomainEnvStats\" WHERE \"domain\"=~ /^$ucs_domain$/ AND $timeFilter\n",
         "description": null,
         "error": null,
@@ -1601,12 +1706,8 @@
       },
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "1057.1739130434783",
-          "value": "1057.1739130434783"
-        },
-        "datasource": "InfluxDB",
+        "current": {},
+        "datasource": "${DS_INFLUXDB}",
         "definition": "SELECT  MEAN((\"total_input_power\")) FROM \"ChassisEnv\" WHERE (\"domain\" =~ /^$ucs_domain$/ AND \"chassis_id\" =~ /^$chassis$/)  AND $timeFilter\n\n",
         "description": null,
         "error": null,
@@ -1629,12 +1730,8 @@
       },
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "243.86478873239437",
-          "value": "243.86478873239437"
-        },
-        "datasource": "InfluxDB",
+        "current": {},
+        "datasource": "${DS_INFLUXDB}",
         "definition": "SELECT  MEAN((\"total_power\")) FROM \"FIEnvStats\" WHERE (\"fi_id\" =~ /^$fabric_interconnect$/ AND \"domain\" =~ /^$ucs_domain$/)  AND $timeFilter\n\n\n",
         "description": null,
         "error": null,
@@ -1657,12 +1754,8 @@
       },
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "84.83896713615023",
-          "value": "84.83896713615023"
-        },
-        "datasource": "InfluxDB",
+        "current": {},
+        "datasource": "${DS_INFLUXDB}",
         "definition": "SELECT  MEAN((\"power_consumed\")) FROM \"Servers\" WHERE \"domain\" =~ /^$ucs_domain$/  AND \"id\" =~ /^$servers$/ AND \"chassis\" =~ /^$chassis$/ AND $timeFilter \n\n\n\n",
         "description": null,
         "error": null,
