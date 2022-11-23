@@ -1592,6 +1592,7 @@ def parse_compute_inventory(domain_ip, blade, ru, compute_power, chassis_power):
         per_blade_dict['num_adaptors'] = item.num_of_adaptors
         per_blade_dict['num_vEths'] = item.num_of_eth_host_ifs
         per_blade_dict['num_vFCs'] = item.num_of_fc_host_ifs
+        per_blade_dict['power'] = '0'
 
     logger.info('Done: Parse compute blades for {}'.format(domain_ip))
 
@@ -1630,6 +1631,7 @@ def parse_compute_inventory(domain_ip, blade, ru, compute_power, chassis_power):
         per_ru_dict['num_adaptors'] = item.num_of_adaptors
         per_ru_dict['num_vEths'] = item.num_of_eth_host_ifs
         per_ru_dict['num_vFCs'] = item.num_of_fc_host_ifs
+        per_ru_dict['power']='0'
 
     logger.info('Done: Parse rack units for {}'.format(domain_ip))
 
@@ -1642,6 +1644,9 @@ def parse_compute_inventory(domain_ip, blade, ru, compute_power, chassis_power):
             server_key=(item.dn).split('/')[2]
             chassis_dict[chassis_key]["blades"][server_key]["power"]=item.consumed_power.split('.')[0]
 
+    for chassis in chassis_dict:
+        chassis_dict[chassis]["total_input_power"]='0'
+        chassis_dict[chassis]["total_output_power"]='0'
     for item in chassis_power:
         chassis_dict[item.dn.split('/')[1]]["total_input_power"]=item.input_power.split('.')[0]
         chassis_dict[item.dn.split('/')[1]]["total_output_power"]=item.output_power.split('.')[0]
